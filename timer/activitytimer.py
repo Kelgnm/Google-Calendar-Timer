@@ -1,4 +1,5 @@
 import datetime
+import time
 import os.path
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -57,10 +58,35 @@ def events(creds): # everything that its being in google calendars
     except HttpError as error:
         print(f"An error has occured: {error}")
 
+def real_time_events(creds):
+    start = dateTime.dateTime.utcnow()
+    end = dateTime.dateTime.utcnow() + datetime.timedelta(hours=int(duration))
+
+    start_formatted = start.isoformat() + 'Z'
+    end_formatted = end.isoformat() + 'Z'
+
+    event = {
+            'summary': 'THIS IS A TEST',
+            'location': 'Online',
+            'description': 'I CANT TAKE THIS ANYMORE',
+            'start': {
+                'dateTime': start_formatted,
+                'timeZone': 'Europe/Sofia',
+            },
+            'end': {
+                'dateTime': end_formatted,
+                'timeZone': 'Europe/Sofia',
+            },
+    }
+
+    service = build('calendar', 'v3', credentials=creds)
+    event = service.events().insert(calendarId= 'your calendar', body=event).execute()
+
 # compiling the entire code in one function
 def main():
     creds = get_credentials()
     events(creds)
+    real_time_events(creds)
 
 # exporting the function in the terminal
 if __name__ == "__main__":
