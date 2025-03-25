@@ -8,4 +8,4 @@ python3 activitytimer.py
 Choose your account
 Accept access to your profile for the api to add the event
 ```
-## "The authentication flow has completed. You may close this window." should pop up
+## "The authentication flow has completed. You may close this window." should show on the page
